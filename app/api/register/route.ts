@@ -5,10 +5,11 @@ import { randomBytes } from "crypto";
 import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
-const resend = new Resend(process.env.RESEND_API_KEY);
+
 
 export async function POST(req: NextRequest) {
   const { email, username, password } = await req.json();
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   // 检查必填字段
   if (!email || !username || !password) {

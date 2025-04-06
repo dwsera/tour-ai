@@ -4,7 +4,6 @@ import { Resend } from "resend";
 import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 // 用于生成验证码
 function generateVerificationCode() {
@@ -13,7 +12,7 @@ function generateVerificationCode() {
 
 export async function POST(req: NextRequest) {
   const { email, username, password, code } = await req.json();
-
+  const resend = new Resend(process.env.RESEND_API_KEY);
   if (!email || !password || !username || !code) {
     return NextResponse.json({ error: "缺少必填字段" }, { status: 400 });
   }

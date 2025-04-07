@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/da181c63-45a8-421d-b666-ddc16f46f556)# **Tour-AI** 
+ **Tour-AI** 
 
 是一个智能旅游规划和推荐系统，旨在通过人工智能技术为用户提供个性化的旅游体验。项目通过解析小红书分享链接，提取旅游相关内容（如景点、行程安排等），并结合 OCR 和自然语言处理技术，生成结构化的行程计划。用户可以保存、查看和管理自己的行程，同时通过 AI 推荐获得更优的旅行建议。Tour-AI 致力于简化旅行规划流程，让用户更轻松地探索世界。
 
@@ -52,7 +52,7 @@
 
 ## 4.小红书链接解析
 
-![image-20250407205636770](C:\Users\zheng\AppData\Roaming\Typora\typora-user-images\image-20250407205636770.png)
+![image-20250407205636770](https://github.com/dwsera/project_01/blob/main/image-20250407205636770(1).png?raw=true)
 
 ![image-20250407205815256](https://github.com/dwsera/project_01/blob/main/image-20250407205815256.png?raw=true)
 

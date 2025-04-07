@@ -190,10 +190,19 @@ const Home = () => {
               className="relative rounded-xl overflow-hidden bg-white shadow-lg mb-6 cursor-pointer"
               onClick={() => goToXhsDetail(item)}
             >
-              <img
+              {/* <img
                 src={
                   item.images?.[0] ||
                   "https://images.unsplash.com/photo-1532009324734-20a7a5813719?ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"
+                }
+                alt={item.title}
+                className="w-full h-auto transform transition-transform duration-300 hover:scale-105"
+              /> */}
+              <img
+                src={
+                  item.images?.[0]
+                    ? `/api/image-proxy?url=${encodeURIComponent(item.images[0])}`
+                    : "https://images.unsplash.com/photo-1532009324734-20a7a5813719?ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"
                 }
                 alt={item.title}
                 className="w-full h-auto transform transition-transform duration-300 hover:scale-105"

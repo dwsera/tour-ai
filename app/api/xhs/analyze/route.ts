@@ -21,7 +21,7 @@ export async function POST(req: Request) {
         messages: [
           {
             role: "user",
-            content: `${body} ${combinedOcrText} 读取内容，提取景点，整理后，直接返回以下格式的 JSON 字符串：
+            content: `${body} ${combinedOcrText} 读取内容，提取景点，整理，直接返回以下格式的 JSON 字符串：
             {
               "city": "城市名称",
               "data": [

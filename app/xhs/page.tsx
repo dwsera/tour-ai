@@ -22,23 +22,35 @@ const XhsParser = () => {
     }
     setLoading(true);
     setErrorMessage(null);
-
+  
     try {
-      const response = await fetch("/api/xhs/add", {
+      // 第一步：提取数据
+      const parseRes = await fetch("/api/xhs/parse", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ link: inputText.trim(), userId: session.user.id, forceOcr }), // 传递 forceOcr
+        body: JSON.stringify({ link: inputText.trim(), forceOcr }),
       });
-
-      const data = await response.json();
-      if (!response.ok || data.error) {
-        throw new Error(data.error || "解析失败");
-      }
-
-      useXhsStore.getState().setData(data);
-      router.push(`/dd?noteId=${data.id}`);
-    } catch (error: any) {
-      setErrorMessage(error.message);
+  
+      const parseData = await parseRes.json();
+      if (!parseRes.ok || parseData.error) throw new Error(parseData.error || "解析失败");
+  
+      // 第二步：调用 Spark 分析 + 存入数据库
+      const analyzeRes = await fetch("/api/xhs/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...parseData,
+          userId: session.user.id,
+        }),
+      });
+  
+      const analyzeData = await analyzeRes.json();
+      if (!analyzeRes.ok || analyzeData.error) throw new Error(analyzeData.error || "保存失败");
+  
+      useXhsStore.getState().setData(analyzeData);
+      router.push(`/dd?noteId=${analyzeData.id}`);
+    } catch (err: any) {
+      setErrorMessage(err.message);
     } finally {
       setLoading(false);
     }

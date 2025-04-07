@@ -103,7 +103,8 @@ export async function POST(req: Request) {
         messages: [
           {
             role: "user",
-            content: `${body} ${combinedOcrText} 读取内容，提取景点，直接返回以下格式的 JSON 字符串，不要包含任何多余的文本、Markdown 标记或其他内容：
+            content: `${body} ${combinedOcrText} 读取内容，提取景点，整理后，直接返回以下格式的 JSON 字符串，
+            不要包含任何多余的文本、Markdown 标记或其他内容：
             {
               "city": "城市名称",
               "data": [
@@ -115,7 +116,7 @@ export async function POST(req: Request) {
                       "description": "景点A的介绍"
                     }
                   ]
-                }
+                }...
               ]
             }`,
           },

@@ -65,27 +65,45 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
+    console.log("[XHS DELETE] 尝试删除笔记, id:", id);
 
-    // 检查笔记是否存在
-    const xhsNote = await prisma.xhsNote.findUnique({
-      where: { id },
-    });
+    let xhsNote;
+    try {
+      xhsNote = await prisma.xhsNote.findUnique({
+        where: { id },
+      });
+    } catch (dbError: any) {
+      console.error("[XHS DELETE] 数据库查询失败:", dbError.message);
+      return NextResponse.json(
+        { error: "数据库连接失败，请检查网络或稍后重试" },
+        { status: 503 }
+      );
+    }
 
     if (!xhsNote) {
+      console.log("[XHS DELETE] 笔记不存在, id:", id);
       return NextResponse.json({ error: "小红书笔记不存在" }, { status: 404 });
     }
 
-    // 删除笔记
-    await prisma.xhsNote.delete({
-      where: { id },
-    });
+    try {
+      await prisma.xhsNote.delete({
+        where: { id },
+      });
+    } catch (dbError: any) {
+      console.error("[XHS DELETE] 数据库删除失败:", dbError.message);
+      return NextResponse.json(
+        { error: "数据库连接失败，请检查网络或稍后重试" },
+        { status: 503 }
+      );
+    }
 
+    console.log("[XHS DELETE] 删除成功, id:", id);
     return NextResponse.json(
       { message: "小红书笔记已成功删除" },
       { status: 200 }
     );
   } catch (error: any) {
-    console.error("删除小红书笔记时出错:", error);
+    console.error("[XHS DELETE] 未知错误:", error);
     return NextResponse.json(
       { error: error.message || "服务器内部错误" },
       { status: 500 }

@@ -12,7 +12,7 @@ export default function RegisterPage() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [codeSent, setCodeSent] = useState(false); // 控制验证码输入框的显示
+  const [codeSent, setCodeSent] = useState(false);
   const router = useRouter();
   const codeInputRef = useRef<HTMLInputElement>(null);
 
@@ -29,7 +29,6 @@ export default function RegisterPage() {
     setLoading(true);
 
     if (!codeSent) {
-      // 发送验证码请求
       try {
         const response = await fetch("/api/register", {
           method: "POST",
@@ -48,7 +47,6 @@ export default function RegisterPage() {
         setError("服务器错误，请稍后重试！");
       }
     } else {
-      // 提交验证码完成注册
       try {
         const response = await fetch("/api/verify", {
           method: "POST",
@@ -90,9 +88,9 @@ export default function RegisterPage() {
               placeholder="请输入邮箱"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
               required
-              disabled={codeSent} // 发送验证码后禁用
+              disabled={codeSent}
             />
           </div>
           <div>
@@ -105,9 +103,9 @@ export default function RegisterPage() {
               placeholder="请输入用户名"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
               required
-              disabled={codeSent} // 发送验证码后禁用
+              disabled={codeSent}
             />
           </div>
           <div>
@@ -120,9 +118,9 @@ export default function RegisterPage() {
               placeholder="请输入密码"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
               required
-              disabled={codeSent} // 发送验证码后禁用
+              disabled={codeSent}
             />
           </div>
 
@@ -130,14 +128,14 @@ export default function RegisterPage() {
             <div>
               <label htmlFor="code" className="block text-sm font-medium text-gray-700">
                 验证码
-              </label>
+            </label>
               <input
                 id="code"
                 type="text"
                 placeholder="请输入验证码"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
                 required
                 ref={codeInputRef}
               />
@@ -146,7 +144,7 @@ export default function RegisterPage() {
 
           <button
             type="submit"
-            className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all disabled:bg-gray-400"
+            className="w-full py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-all disabled:bg-gray-400"
             disabled={loading}
           >
             {loading ? "处理中..." : codeSent ? "提交验证码" : "发送验证码"}
@@ -155,7 +153,7 @@ export default function RegisterPage() {
 
         <p className="mt-4 text-center text-sm text-gray-600">
           已有账号？{" "}
-          <Link href="/login" className="text-blue-600 hover:underline">
+          <Link href="/login" className="text-orange-600 hover:underline">
             登录
           </Link>
         </p>

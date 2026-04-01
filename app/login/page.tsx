@@ -3,7 +3,7 @@
 import { signIn } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react"; // 引入 useSession
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 export default function LoginPage() {
@@ -12,9 +12,8 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const { data: session, status } = useSession(); // 获取会话状态
+  const { data: session, status } = useSession();
 
-  // 登录成功后检查会话状态
   useEffect(() => {
     if (status === "authenticated") {
       router.push("/cc");
@@ -39,8 +38,6 @@ export default function LoginPage() {
         redirect: false,
       });
 
-      console.log("SignIn result:", result);
-
       if (result?.error) {
         switch (result.error) {
           case "用户名错误":
@@ -55,10 +52,10 @@ export default function LoginPage() {
           default:
             setError("登录失败，请稍后再试");
         }
-        setLoading(false);
       }
     } catch (err) {
       setError("网络错误，请检查连接后重试");
+    } finally {
       setLoading(false);
     }
   };
@@ -86,14 +83,19 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value.trim())}
               disabled={loading}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed transition-colors"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed transition-colors"
               required
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-              密码
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                密码
+              </label>
+              <Link href="/forgot-password" className="text-sm text-orange-600 hover:underline">
+                忘记密码？
+              </Link>
+            </div>
             <input
               id="password"
               type="password"
@@ -101,17 +103,17 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               disabled={loading}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed transition-colors"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed transition-colors"
               required
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 rounded-md font-medium transition-all ${
+            className={`w-full py-3 rounded-md font-medium transition-all text-white ${
               loading
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700 text-white active:bg-blue-800"
+                : "bg-orange-600 hover:bg-orange-700 active:bg-orange-800"
             }`}
           >
             {loading ? (
@@ -146,7 +148,7 @@ export default function LoginPage() {
 
         <p className="mt-6 text-center text-sm text-gray-600">
           还没有账号？{" "}
-          <Link href="/register" className="text-blue-600 hover:underline focus:outline-none">
+          <Link href="/register" className="text-orange-600 hover:underline focus:outline-none">
             立即注册
           </Link>
         </p>

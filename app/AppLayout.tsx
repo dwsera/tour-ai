@@ -19,14 +19,14 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
+ <div className="h-screen overflow-hidden bg-background flex flex-col">
       <Header onSidebarToggle={() => setIsSidebarOpen(!isSidebarOpen)} />
 
-      <div className="flex pt-14">
+      <div className="flex flex-1 overflow-hidden">
         <Sidebar isOpen={isSidebarOpen} />
 
         <main
-          className={`flex-1 transition-all duration-300 ease-in-out ${
+          className={`flex-1 transition-all duration-300 ease-in-out overflow-y-auto ${
             isSidebarOpen ? 'ml-60' : 'ml-0'
           }`}
         >

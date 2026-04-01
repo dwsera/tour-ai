@@ -1,6 +1,4 @@
- **Tour-AI** 
-
-是一个智能旅游规划和推荐系统，旨在通过人工智能技术为用户提供个性化的旅游体验。项目通过解析小红书分享链接，提取旅游相关内容（如景点、行程安排等），并结合 OCR 和自然语言处理技术，生成结构化的行程计划。用户可以保存、查看和管理自己的行程，同时通过 AI 推荐获得更优的旅行建议。Tour-AI 致力于简化旅行规划流程，让用户更轻松地探索世界。
+**Tour-AI** 是一款智能旅游规划助手，利用人工智能技术为用户提供个性化的旅行体验。系统支持多种方式获取旅行灵感：输入目的地、在地图上选择城市，或解析小红书分享链接，快速提取旅游攻略。AI 智能生成结构化行程计划，推荐热门景点和必尝美食。用户可以保存和管理行程、记录旅行日记，并通过 AI 助手获取实时旅行建议。Tour-AI 致力于简化旅行规划流程，让每一次探索都轻松愉快。
 
 # 使用技术
 
@@ -30,35 +28,85 @@
 
 # 功能
 
-## 0.登录
+## 0. 登录/注册
 
-![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/image-20250407210836236.png?raw=true)
+支持邮箱注册和登录，提供完整的用户认证系统。
 
-![image-20250407210848860](https://github.com/dwsera/project_01/blob/main/image-20250407210848860.png?raw=true)
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/1.png?raw=true)
 
-## 1.输入地址获取景点推荐
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/2.png?raw=true)
 
-![image-20250407205402499](https://raw.githubusercontent.com/dwsera/project_01/refs/heads/main/image-20250407205402499.png)
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/3.png?raw=true)
 
-![image-20250407205717018](https://github.com/dwsera/project_01/blob/main/image-20250407205717018.png?raw=true)
+## 1. 输入地址获取景点推荐
 
-## 2.点击地图获取景点推荐
+在首页输入城市名称，选择旅行天数和兴趣偏好，AI 为你智能生成个性化行程攻略。
 
-![image-20250407205512260](https://github.com/dwsera/project_01/blob/main/image-20250407205512260.png?raw=true)
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/4.png?raw=true)
 
-## 3.AI
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/5.png?raw=true)
 
-![image-20250407205615710](https://github.com/dwsera/project_01/blob/main/image-20250407205615710.png?raw=true)
+## 2. 点击地图获取景点推荐
 
-## 4.小红书链接解析
+在创建行程页面，通过交互式地图选择目的地，AI 为你规划专属旅行路线。
 
-![image-20250407205636770](https://github.com/dwsera/project_01/blob/main/image-20250407205636770(1).png?raw=true)
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/6.png?raw=true)
 
-![image-20250407205815256](https://github.com/dwsera/project_01/blob/main/image-20250407205815256.png?raw=true)
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/7.png?raw=true)
 
-## 5.我的行程
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/8.png?raw=true)
 
-![image-20250407205908911](https://github.com/dwsera/project_01/blob/main/image-20250407205908911.png?raw=true)
+## 3. AI 智能助手
+
+专业的旅行 AI 助手，提供实时旅行咨询、景点推荐、美食建议等服务，支持流式对话。
+
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/10.png?raw=true)
+
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/9.png?raw=true)
+
+## 4. 小红书链接解析
+
+输入小红书分享链接，自动解析并提取旅游内容，快速获取他人分享的旅行攻略。
+
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/11.png?raw=true)
+
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/12.png?raw=true)
+
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/13.png?raw=true)
+
+## 5. 我的行程
+
+查看和管理所有保存的旅行行程，支持查看详细日程安排和景点信息。
+
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/19.png?raw=true)
+
+## 6. 旅行日记
+
+记录你的旅行故事，支持添加标题、内容、城市、日期和心情，打造专属旅行回忆录。
+
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/14.png?raw=true)
+
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/15.png?raw=true)
+
+## 6. 定价方案
+
+随时订阅解锁更多功能。
+
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/17.png?raw=true)
+
+## 6. 联系我们
+
+发送功能建议、商务合作还是技术反馈，提供支持。
+
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/18.png?raw=true)
+
+## 7. 个人中心
+
+管理个人资料，修改用户名、简介和密码，查看账户信息。
+
+![image-20250407210836236](https://github.com/dwsera/project_01/blob/main/16.png?raw=true)
+
+
 
 # 注意
 

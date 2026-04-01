@@ -10,48 +10,98 @@ const AMAP_API_KEY = process.env.AMAP_API_KEY;
 const APIPassword = process.env.APIPassword;
 const IMAGE_API_ID = process.env.IMAGE_API_ID;
 const IMAGE_API_KEY = process.env.IMAGE_API_KEY;
-
+const QWEN_API_KEY = process.env.QWEN_API_KEY;
 interface Place {
   name: string;
   description: string;
   image: string;
+  visitDuration?: string;
+  commuteTime?: string;
+  ticketRequired?: boolean;
+  ticketPrice?: string;
+  transportMode?: string;
+  bestTimeToVisit?: string;
+  tips?: string;
 }
 
-// 获取推荐景点（讯飞星火 API）
-const getRecommendedPlacesFromXunfei = async (
+// 获取推荐景点（千问 API）
+const getRecommendedPlacesFromQwen = async (
   city: string,
   keyword: string,
   days: number
 ): Promise<{ day: number; places: Place[] }[]> => {
-  console.log("请求讯飞星火API：", { city, days, keyword });
+  console.log("请求千问API：", { city, days, keyword });
 
   try {
     const response = await fetch(
-      "https://spark-api-open.xf-yun.com/v1/chat/completions",
+      "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
       {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${APIPassword}`,
+          Authorization: `Bearer ${QWEN_API_KEY}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "4.0Ultra",
+          model: "qwen3.5-plus",
           messages: [
             {
               role: "system",
               content:
-                "你是一位专业的旅行规划师，熟知中国各城市的热门景点。请根据用户输入的城市和关键字，推荐该城市的真实旅游景点。",
+                "你是一位资深的旅行规划师，拥有丰富的中国旅游经验。你熟悉各城市的历史文化、自然风光、美食特色和现代地标。你的任务是为游客制定个性化、实用且有趣的旅行攻略。推荐的地点必须真实存在，具有代表性和游览价值。注意：行程中的地点不限于景点，根据用户的兴趣可以包含餐厅、小吃街、美食体验、购物场所、演出场所等各类旅行目的地。",
             },
             {
               role: "user",
-              content: `请为我在${city}规划一个${days}天的旅行攻略，推荐与"${keyword}"相关的热门景点。
-                1-2天：每天4个左右景点，3天，可以3个左右。
-                直接返回以下格式的 JSON 字符串，不要包含任何多余的文本、Markdown 标记或其他内容。
-                格式：
-                [
-                  { "day": 1, "places": [{ "name": "景点A", "description": "简短描述" },
-                    { "name": "景点B", "description": "简短描述" } ] },
-                ]`,
+              content: `请为我在${city}规划一个${days}天的旅行攻略，重点推荐与"${keyword}"相关的热门地点。
+
+行程安排要求：
+- 根据关键词选择合适的地点类型：如果关键词包含"美食"，请推荐特色餐厅、小吃街、美食体验等；如果包含"购物"，请推荐商业街、购物中心等；如果包含"艺术"，请推荐美术馆、艺术展览等。不要只推荐传统景点。
+- 如果关键词包含"美食"，行程中应穿插安排餐厅用餐（如早餐店、午餐餐厅、晚餐餐厅、小吃街、宵夜等），让美食贯穿全天行程。
+- 考虑地点之间的地理位置，合理安排游览/用餐顺序
+- 每个地点提供简洁准确的描述（20-50字），突出其特色和亮点
+- 时间控制：每天的总时间（游览/用餐时间 + 通勤时间）控制在8小时左右，合理安排每天地点数量
+
+每个地点需要包含以下详细信息：
+- name: 地点名称（如餐厅名、景点名、商场名等）
+- description: 地点特色描述（20-50字）
+- visitDuration: 建议停留时长（如：2-3小时、1-2小时、30分钟-1小时）
+- commuteTime: 从上一个地点的通勤时间（如：30分钟、1小时，第一个地点填"起点"）
+- ticketRequired: 是否需要门票/费用（true/false）
+- ticketPrice: 费用（如：免费、50元、人均80-120元）
+- transportMode: 推荐交通方式（如：地铁、公交、打车、步行）
+- bestTimeToVisit: 最佳时间（如：上午、中午、下午、傍晚、全天）
+- tips: 实用小贴士（1-2条实用建议）
+
+请直接返回以下格式的 JSON 字符串，不要包含任何多余的文本、Markdown 标记或其他内容：
+[
+  { 
+    "day": 1, 
+    "places": [{ 
+      "name": "景点名称", 
+      "description": "景点特色描述",
+      "visitDuration": "建议游览时长",
+      "commuteTime": "通勤时间",
+      "ticketRequired": true/false,
+      "ticketPrice": "门票价格",
+      "transportMode": "交通方式",
+      "bestTimeToVisit": "最佳游览时间",
+      "tips": "游览小贴士"
+    }] 
+  },
+  { 
+    "day": 2, 
+    "places": [{ 
+      "name": "景点名称", 
+      "description": "景点特色描述",
+      "visitDuration": "建议游览时长",
+      "commuteTime": "通勤时间",
+      "ticketRequired": true/false,
+      "ticketPrice": "门票价格",
+      "transportMode": "交通方式",
+      "bestTimeToVisit": "最佳游览时间",
+      "tips": "游览小贴士"
+    }] 
+  }
+]`,
             },
           ],
           max_tokens: 2048,
@@ -61,20 +111,20 @@ const getRecommendedPlacesFromXunfei = async (
 
     // 检查响应状态
     if (!response.ok) {
-      throw new Error(`讯飞 API 请求失败，状态码: ${response.status}`);
+      throw new Error(`千问 API 请求失败，状态码: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log("讯飞星火完整响应:", data);
+    console.log("千问完整响应:", data);
 
     // 检查响应数据是否有效
     if (!data || !data.choices || !data.choices[0]?.message?.content) {
-      throw new Error("讯飞 API 返回的数据无效或为空");
+      throw new Error("千问 API 返回的数据无效或为空");
     }
 
     const content = data.choices[0].message.content.trim();
     if (!content) {
-      throw new Error("讯飞 API 返回内容为空");
+      throw new Error("千问 API 返回内容为空");
     }
 
     let cleanedContent = content.replace(/^```json/, "").replace(/```$/, "");
@@ -88,7 +138,7 @@ const getRecommendedPlacesFromXunfei = async (
       const matches = [...cleanedContent.matchAll(placePattern)];
 
       if (matches.length === 0) {
-        throw new Error("无法从讯飞 API 提取有效景点数据");
+        throw new Error("无法从千问 API 提取有效景点数据");
       }
 
       itinerary = Array.from({ length: days }, (_, day) => ({
@@ -97,17 +147,24 @@ const getRecommendedPlacesFromXunfei = async (
           name: match[1],
           description: match[2],
           image: "/default.jpg",
+          visitDuration: "2-3小时",
+          commuteTime: day === 0 && matches.indexOf(match) === day * 2 ? "起点" : "30分钟",
+          ticketRequired: false,
+          ticketPrice: "免费",
+          transportMode: "地铁",
+          bestTimeToVisit: "全天",
+          tips: "建议提前查询开放时间",
         })),
       }));
     }
 
     if (!Array.isArray(itinerary)) {
-      throw new Error("讯飞 API 返回的行程数据格式错误");
+      throw new Error("千问 API 返回的行程数据格式错误");
     }
 
     if (itinerary.length !== days) {
       console.warn(
-        `讯飞 API 返回的天数 (${itinerary.length}) 不匹配请求天数 (${days})`
+        `千问 API 返回的天数 (${itinerary.length}) 不匹配请求天数 (${days})`
       );
       itinerary = itinerary.slice(0, days);
     }
@@ -115,7 +172,7 @@ const getRecommendedPlacesFromXunfei = async (
     console.log(`成功解析 ${itinerary.length} 天行程`);
     return itinerary;
   } catch (error) {
-    console.error("解析讯飞星火数据失败:", error);
+    console.error("解析千问数据失败:", error);
     throw error;
   }
 };
@@ -203,7 +260,7 @@ export async function GET(req: Request) {
   const userId = session.user.id;
 
   if (!keyword) {
-    keyword = "博物馆\文化\艺术\历史\商场\图书馆等各式各样景点";
+    keyword = "历史文化景点、自然风光、现代地标、特色街区、美食体验";
   }
 
   if (!city || !AMAP_API_KEY || !IFLYTEK_API_KEY || !IFLYTEK_API_SECRET) {
@@ -237,7 +294,7 @@ export async function GET(req: Request) {
       );
     }
 
-    let itinerary = await getRecommendedPlacesFromXunfei(city, keyword, days);
+    let itinerary = await getRecommendedPlacesFromQwen(city, keyword, days);
     console.log(`API 生成的行程天数: ${itinerary.length}`);
 
     let updatedItinerary = await Promise.all(

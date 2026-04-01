@@ -23,20 +23,26 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "用户未登录" }, { status: 401 });
     }
 
-    const xhsNotes = await prisma.xhsNote.findMany({
-      where: { userId },
-      orderBy: { createdAt: "desc" },
-      select: {
-        id: true,
-        title: true,
-        body: true,
-        images: true,
-        ocrTexts: true,
-        jsonBody: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-    });
+    let xhsNotes;
+    try {
+      xhsNotes = await prisma.xhsNote.findMany({
+        where: { userId },
+        orderBy: { createdAt: "desc" },
+        select: {
+          id: true,
+          title: true,
+          body: true,
+          images: true,
+          ocrTexts: true,
+          jsonBody: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      });
+    } catch (dbError: any) {
+      console.error("[XHS LIST] 数据库查询失败:", dbError.message);
+      return NextResponse.json({ error: "数据库连接失败", data: [] }, { status: 503 });
+    }
 
     const responseData: XhsNoteResponse[] = xhsNotes.map((note) => ({
       id: note.id,
@@ -54,8 +60,8 @@ export async function GET(req: Request) {
       headers: { "Cache-Control": "no-store" },
     });
   } catch (error: any) {
-    console.error("获取小红书笔记列表时出错:", error);
-    return NextResponse.json({ error: error.message || "服务器内部错误" }, { status: 500 });
+    console.error("[XHS LIST] 未知错误:", error);
+    return NextResponse.json({ error: error.message || "服务器内部错误", data: [] }, { status: 500 });
   } finally {
     await prisma.$disconnect();
   }

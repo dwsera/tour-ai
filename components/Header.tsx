@@ -117,6 +117,7 @@ const Header = ({ onSidebarToggle }: HeaderProps) => {
                     <button
                       onClick={() => {
                         setShowDropdown(false);
+                        localStorage.clear();
                         signOut({ callbackUrl: "/login" });
                       }}
                       className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-gray-600 hover:bg-red-50 hover:text-red-500 transition-colors"

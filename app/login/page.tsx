@@ -17,7 +17,6 @@ export default function LoginPage() {
   useEffect(() => {
     if (status === "authenticated") {
       router.push("/cc");
-      router.refresh();
     }
   }, [status, router]);
 
@@ -52,6 +51,9 @@ export default function LoginPage() {
           default:
             setError("登录失败，请稍后再试");
         }
+      } else {
+        // 登录成功后刷新页面以同步 session
+        window.location.reload();
       }
     } catch (err) {
       setError("网络错误，请检查连接后重试");

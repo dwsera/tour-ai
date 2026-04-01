@@ -67,7 +67,7 @@ const Profile = () => {
         body: JSON.stringify({ username, bio }),
       });
       if (res.ok) {
-        await update({ username, bio });
+        await update({ username, bio, email: session?.user?.email });
         showToast("success", "资料已保存");
         setEditing(false);
       } else {

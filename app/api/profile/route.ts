@@ -7,8 +7,10 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 export async function GET() {
+  // 把 session 提到最外层，全局都能访问
+  let session;
   try {
-    const session = await getServerSession(authOptions);
+    session = await getServerSession(authOptions);
     if (!session?.user?.id) {
       return NextResponse.json({ error: "未登录" }, { status: 401 });
     }
@@ -34,8 +36,13 @@ export async function GET() {
     return NextResponse.json(user);
   } catch (error: any) {
     console.error("[PROFILE GET] 错误:", error.message);
+    // 修复：catch 里安全访问 session
     return NextResponse.json(
-      { username: session?.user?.username, email: session?.user?.email, bio: null },
+      { 
+        username: session?.user?.username ?? null, 
+        email: session?.user?.email ?? null, 
+        bio: null 
+      },
       { status: 200 }
     );
   } finally {

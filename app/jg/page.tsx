@@ -54,7 +54,7 @@ export default function TourResults() {
   };
 
   const handleShare = async () => {
-    const text = `${city || '旅行'} ${tourismGuide.schedule.length}日行程\n${tourismGuide.schedule.map((day, i) =>
+    const text = `${city || '旅行'} ${tourismGuide?.schedule.length}日行程\n${tourismGuide?.schedule.map((day, i) =>
       `Day${i + 1}: ${day.places.map(p => p.name).join(' → ')}`
     ).join('\n')}`;
 
@@ -86,11 +86,11 @@ export default function TourResults() {
   const handleDownload = () => {
     const lines = [
       `═══════════════════════════════════`,
-      `  ${city || '旅行'} · ${tourismGuide.schedule.length}日行程攻略`,
+      `  ${city || '旅行'} · ${tourismGuide?.schedule.length}日行程攻略`,
       `═══════════════════════════════════`,
       ``,
     ];
-    tourismGuide.schedule.forEach((day, i) => {
+    tourismGuide?.schedule.forEach((day, i) => {
       lines.push(`【Day ${i + 1}】`);
       day.places.forEach((p, j) => {
         lines.push(`  ${j + 1}. ${p.name}`);
@@ -109,7 +109,7 @@ export default function TourResults() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${city || '旅行攻略'}_${tourismGuide.schedule.length}日行程.txt`;
+    a.download = `${city || '旅行攻略'}_${tourismGuide?.schedule.length}日行程.txt`;
     a.click();
     URL.revokeObjectURL(url);
   };

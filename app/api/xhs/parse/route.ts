@@ -28,7 +28,7 @@ async function getBaiduAccessToken(): Promise<string> {
 
   cachedAccessToken = data.access_token;
   tokenExpireTime = Date.now() + (data.expires_in - 600) * 1000;
-  return cachedAccessToken;
+  return cachedAccessToken || '';
 }
 
 async function ocrImage(imageUrl: string): Promise<string> {

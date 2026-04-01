@@ -1,10 +1,16 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 // 定义每个景点的类型
 interface Place {
   name: string;
   description: string;
   image: string;
+  visitDuration: any;
+  ticketPrice: any;
+  tips: any;
+  transportMode: any;
+  bestTimeToVisit:any;
+  commuteTime:any;
 }
 
 // 定义每一天的行程
@@ -28,7 +34,7 @@ type TourStore = {
 
 const useTourStore = create<TourStore>((set) => ({
   tourismGuide: null,
-  city: '',
+  city: "",
   setTourismGuide: (guide) => set({ tourismGuide: guide }),
   setCity: (city) => set({ city }),
 }));

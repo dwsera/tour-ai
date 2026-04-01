@@ -40,8 +40,16 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 16 },
-  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 14 } },
-};
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring" as const,
+      stiffness: 100,
+      damping: 14
+    } as const
+  }
+} as const;
 
 export default function DiscoverPage() {
   const router = useRouter();
@@ -214,11 +222,10 @@ export default function DiscoverPage() {
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
                 onClick={() => setKeyword(keyword === kw.label ? "" : kw.label)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all flex items-center gap-1.5 ${
-                  keyword === kw.label
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all flex items-center gap-1.5 ${keyword === kw.label
                     ? "bg-orange-500 text-white shadow-lg shadow-orange-500/20 border border-transparent"
                     : "bg-white/10 text-gray-200 hover:bg-white/15 hover:text-white border border-white/10"
-                }`}
+                  }`}
               >
                 <span>{kw.emoji}</span>
                 {kw.label}

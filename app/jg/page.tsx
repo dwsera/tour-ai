@@ -34,7 +34,11 @@ export default function TourResults() {
     visible: {
       y: 0,
       opacity: 1,
-      transition: { type: 'spring', stiffness: 100 }
+      transition: {
+        type: "spring" as const,
+        stiffness: 100,
+        damping: 20
+      }
     }
   };
 
@@ -171,8 +175,8 @@ export default function TourResults() {
                 key={idx}
                 onClick={() => setExpandedDayIndex(idx)}
                 className={`px-6 py-2 rounded-2xl font-bold transition-all duration-300 ${expandedDayIndex === idx
-                    ? 'bg-slate-900 text-white shadow-lg scale-105'
-                    : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                  ? 'bg-slate-900 text-white shadow-lg scale-105'
+                  : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
                   }`}
               >
                 DAY {idx + 1}

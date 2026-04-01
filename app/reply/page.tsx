@@ -60,24 +60,42 @@ function saveMessages(messages: Message[]) {
     localStorage.removeItem(STORAGE_KEY);
   }
 }
-
+// 欢迎页动画
 const welcomeVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
-  },
-};
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 }
+  }
+} as const;
 
 const welcomeItem = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 120, damping: 14 } },
-};
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring" as const,
+      stiffness: 120,
+      damping: 14
+    } as const
+  }
+} as const;
 
+// 消息气泡动画
 const messageVariants = {
   hidden: { opacity: 0, y: 12, scale: 0.97 },
-  visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 100, damping: 15 } },
-};
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring" as const,
+      stiffness: 100,
+      damping: 15
+    } as const
+  }
+} as const;
 
 export default function Home() {
   const { data: session, status } = useSession();

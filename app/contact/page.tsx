@@ -62,7 +62,7 @@ const Contact = () => {
 
   const itemVars = {
     hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100 } }
+    visible: { y: 0, opacity: 1, transition: { type: "spring" as const, stiffness: 100 } }
   };
 
   return (
@@ -83,7 +83,7 @@ const Contact = () => {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 border border-orange-200 text-orange-600 text-xs font-bold tracking-widest uppercase mb-4">
-             Contact Us
+            Contact Us
           </div>
           <h1 className="text-5xl md:text-6xl font-black text-gray-800 tracking-tighter mb-4">
             期待您的 <span className="bg-gradient-to-r from-orange-400 to-rose-500 bg-clip-text text-transparent">回响</span>
@@ -146,7 +146,7 @@ const Contact = () => {
           >
             <div className="bg-white backdrop-blur-2xl rounded-[2.5rem] border border-gray-200 p-8 md:p-12 shadow-lg relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-orange-100/50 blur-[60px] rounded-full" />
-              
+
               <h3 className="text-2xl font-black text-gray-800 mb-10 tracking-tight flex items-center gap-3">
                 发送信息 <div className="h-px w-12 bg-orange-200" />
               </h3>
@@ -206,9 +206,8 @@ const Contact = () => {
             initial={{ opacity: 0, x: 50, scale: 0.9 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: 20, scale: 0.9 }}
-            className={`fixed bottom-10 right-10 z-[100] flex items-center gap-3 px-6 py-4 rounded-2xl shadow-lg backdrop-blur-md border border-white/20 font-bold ${
-              toast.type === "success" ? "bg-emerald-500 text-white" : "bg-rose-500 text-white"
-            }`}
+            className={`fixed bottom-10 right-10 z-[100] flex items-center gap-3 px-6 py-4 rounded-2xl shadow-lg backdrop-blur-md border border-white/20 font-bold ${toast.type === "success" ? "bg-emerald-500 text-white" : "bg-rose-500 text-white"
+              }`}
           >
             {toast.type === "success" ? <CheckCircle2 className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
             {toast.message}

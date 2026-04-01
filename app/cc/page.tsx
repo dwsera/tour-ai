@@ -26,7 +26,7 @@ const itemVariants = {
   visible: {
     y: 0,
     opacity: 1,
-    transition: { type: "spring", stiffness: 100, damping: 15 },
+    transition: { type: "spring" as const, stiffness: 100, damping: 15 },
   },
 };
 
@@ -47,7 +47,7 @@ function getItineraryImage(item: any): string {
         }
       }
     }
-  } catch {}
+  } catch { }
   return DEFAULT_ITINERARY_IMG;
 }
 
@@ -162,7 +162,7 @@ export default function MyCollection() {
       const schedule = typeof item.schedule === "string" ? JSON.parse(item.schedule) : item.schedule;
       setTourismGuide({ city: item.city, schedule });
       setCity(item.city);
-    } catch {}
+    } catch { }
     router.push("/jg");
   };
 
@@ -199,11 +199,10 @@ export default function MyCollection() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className={`fixed top-24 left-1/2 -translate-x-1/2 z-[100] flex items-center gap-3 px-6 py-3 rounded-full shadow-xl backdrop-blur-md border ${
-                toast.type === "success"
+              className={`fixed top-24 left-1/2 -translate-x-1/2 z-[100] flex items-center gap-3 px-6 py-3 rounded-full shadow-xl backdrop-blur-md border ${toast.type === "success"
                   ? "bg-emerald-500/90 border-emerald-400 text-white"
                   : "bg-red-500/90 border-red-400 text-white"
-              }`}
+                }`}
             >
               {toast.type === "success" ? <CheckCircle2 className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
               <span className="font-bold text-sm">{toast.message}</span>
@@ -426,9 +425,8 @@ function CollectionCard({
       <div className="p-6 flex items-center justify-between border-t border-slate-50">
         <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{footerLeft}</span>
         <div
-          className={`flex items-center gap-1.5 text-xs font-black transition-colors ${
-            accent === "rose" ? "group-hover:text-rose-600" : "group-hover:text-orange-600"
-          }`}
+          className={`flex items-center gap-1.5 text-xs font-black transition-colors ${accent === "rose" ? "group-hover:text-rose-600" : "group-hover:text-orange-600"
+            }`}
         >
           {footerRight} <ChevronRight className="w-4 h-4" />
         </div>
@@ -441,9 +439,8 @@ function EmptyState({ text, color = "orange" }: { text: string; color?: string }
   return (
     <div className="col-span-full py-20 flex flex-col items-center justify-center bg-white/50 border-2 border-dashed border-slate-200 rounded-[40px]">
       <div
-        className={`w-16 h-16 rounded-2xl ${
-          color === "rose" ? "bg-rose-50 text-rose-300" : "bg-orange-50 text-orange-300"
-        } flex items-center justify-center mb-4 opacity-50`}
+        className={`w-16 h-16 rounded-2xl ${color === "rose" ? "bg-rose-50 text-rose-300" : "bg-orange-50 text-orange-300"
+          } flex items-center justify-center mb-4 opacity-50`}
       >
         <Route className="w-8 h-8" />
       </div>
